@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+	<head>
+		<title class="lang" langKey="xxxx">Service</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    	<script type="text/javascript" src="js/jquery.min.js"></script>
+	</head>
+	<body>
+		
+    	<div class="container">
+      	</div>
+		<script type="text/javascript">
+			$.namespace("druid.service");
+			druid.service = function () {  
+				return  {
+					init : function() {
+						this.ajaxRequestForService();
+					},
+					
+					ajaxRequestForService : function() {
+						$.ajax({
+							type: 'POST',
+							url: "service.json",
+							success: function(data) {
+								var serviceHtml = '';
+								var services = data.Content;
+								if (services) {
+									for ( var i = 0; i < services.length; i++) {
+										var service = services[i];
+										serviceHtml += '<li>' + service.id + '<ul>';
+										for ( var j = 0; j < service.instances.length; j++ ) {
+											serviceHtml += '<li><a href="index.html?serviceId=' + service.id + '&instanceId=' + service.instances[j].instanceId + '">' + service.instances[j].instanceId + '</a></li>';
+										}
+										serviceHtml += '</ul></li>';
+									}
+								}
+								$('.container').append(serviceHtml);
+							},
+							dataType: "json"
+						});
+					}
+				}
+			}();
+			
+			$(document).ready(function() {
+				druid.service.init();
+			});
+		</script>
+	</body>
+</html>
