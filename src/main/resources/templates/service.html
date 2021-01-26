@@ -29,7 +29,7 @@
 										var service = services[i];
 										serviceHtml += '<li>' + service.id + '<ul>';
 										for ( var j = 0; j < service.instances.length; j++ ) {
-											serviceHtml += '<li><a href="index.html?serviceId=' + service.id + '&instanceId=' + service.instances[j].instanceId + '">' + service.instances[j].instanceId + '</a></li>';
+											serviceHtml += '<li><a target="_blank" href="index.html?serviceId=' + service.id + '&instanceId=' + service.instances[j].instanceId + '">' + service.instances[j].instanceId + '</a></li>';
 										}
 										serviceHtml += '</ul></li>';
 									}
