@@ -83,4 +83,18 @@ eureka:
       defaultZone: http://192.168.22.146:7001/eureka
 ```
 
-4. 访问 uri `/druid/service.html`
+4. 客户端微服务配置
+
+```yml
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+```
+
+5. 访问 uri `/druid/service.html`
