@@ -56,6 +56,7 @@ public class DruidAdminService implements DruidStatServiceMBean {
 	    			service.setInstances(instances);
 	    			return service;
 	    		})
+	    		.sorted((x, y) -> x.getId().compareTo(y.getId()))
 	    		.collect(Collectors.toList());
     	return services;
     }
