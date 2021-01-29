@@ -8,7 +8,7 @@
 
 - 支持集群状态下的集群监控
 - 支持 Spring Boot 自动配置
-- 支持 eureka, consul, nacos 三种配置中心
+- 支持 eureka, consul, nacos 三种注册中心
 
 # 效果展示
 
