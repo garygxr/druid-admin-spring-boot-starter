@@ -8,7 +8,7 @@
 
 - 支持集群状态下的集群监控
 - 支持 Spring Boot 自动配置
-- 支持 eureka, consul, nacos 三种配置中心
+- 支持 eureka, consul, nacos 三种注册中心
 
 # 效果展示
 
@@ -83,4 +83,18 @@ eureka:
       defaultZone: http://192.168.22.146:7001/eureka
 ```
 
-4. 访问 uri `/druid/service.html`
+4. 客户端微服务配置
+
+```yml
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+```
+
+5. 访问 uri `/druid/service.html`
