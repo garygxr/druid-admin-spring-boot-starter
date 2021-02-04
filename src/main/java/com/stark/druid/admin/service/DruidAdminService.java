@@ -13,6 +13,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import com.alibaba.druid.stat.DruidStatService;
 import com.alibaba.druid.stat.DruidStatServiceMBean;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.stark.commons.lang.util.HttpUtil;
 import com.stark.commons.lang.util.Utils;
 import com.stark.druid.admin.boot.properties.DruidAdminProperties;
@@ -27,14 +28,29 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DruidAdminService implements DruidStatServiceMBean {
 	
+	private static final String CHARSET = "UTF-8";
+	
     private DiscoveryClient discoveryClient;
     
     private DruidAdminProperties druidAdminProperties;
     
     public String service(String url) {
     	if (url.equals("/service.json")) {
-    		List<Service> services = getServices();
-    		return DruidStatService.returnJSONResult(DruidStatService.RESULT_CODE_SUCCESS, JSONArray.toJSON(services));
+    		JSONArray services = new JSONArray();
+    		getServices().forEach(service -> {
+				JSONObject serviceJson = new JSONObject();
+				serviceJson.put("id", service.getId());
+				
+				JSONArray instances = new JSONArray();
+				service.getInstances().forEach(instance -> {
+					JSONObject instanceJson = new JSONObject();
+					instanceJson.put("instanceId", getInstanceId(instance));
+					instances.add(instanceJson); 
+				});
+				serviceJson.put("instances", instances);
+				services.add(serviceJson);
+			});
+    		return DruidStatService.returnJSONResult(DruidStatService.RESULT_CODE_SUCCESS, services);
     	}
     	
         Map<String, String> parameters = DruidStatService.getParameters(url);
@@ -64,7 +80,7 @@ public class DruidAdminService implements DruidStatServiceMBean {
     private String getInstanceId(ServiceInstance instance) {
 		String instanceId = instance.getInstanceId();
         if (instanceId == null) {
-            instanceId = instance.getMetadata().get("nacos.instanceId").replaceAll("#", "-").replaceAll("@@", "-");
+        	 instanceId = instance.getMetadata().get("nacos.instanceId").replaceAll("#|@@", "-");
         }
         return instanceId;
     }
@@ -75,12 +91,12 @@ public class DruidAdminService implements DruidStatServiceMBean {
     	if (instance == null) {
     		return DruidStatService.returnJSONResult(DruidStatService.RESULT_CODE_ERROR, "No such a service instance: serviceId=" + serviceId + ",serviceInstanceId=" + serviceInstanceId + ".");
     	}
-    	url = instance.getScheme() + "://" + instance.getHost() + ":" + instance.getPort() + "/druid" + url;
+    	url = StringUtils.defaultIfBlank(instance.getScheme(), "http") + "://" + instance.getHost() + ":" + instance.getPort() + "/druid" + url;
     	
     	String responseJson = "";
     	try {
 			HttpResponse response = HttpUtil.doGet(url, null, null);
-			responseJson = EntityUtils.toString(response.getEntity(), "UTF-8");
+			responseJson = EntityUtils.toString(response.getEntity(), CHARSET);
 		} catch (Exception e) {
 			log.error("Delegate to service instance error: serviceId={},serviceInstanceId={},url={}",
 					serviceId, serviceInstanceId, url, e);
