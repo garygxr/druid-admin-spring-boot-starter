@@ -56,32 +56,59 @@
     <artifactId>druid-admin-spring-boot-starter</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
+<!-- druid 监控底层基于 servlet ，需要 web 模块支持 -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+    <version>${spring-cloud.version}</version>
+</dependency>
 ```
 
 3. yaml 中配置，以 eureka 注册中心为例
 
-```yml
-spring:
-  datasource:
-    druid:
-      admin:
-        login-username: user
-        login-password: 123456
-        applications:
-        - escloud-service-elk
-        - escloud-service-manager
-        - escloud-service-ocr
-        - escloud-service-user
+    - eureka 注册中心
 
-eureka:
-  instance:
-    prefer-ip-address: true
-    lease-renewal-interval-in-seconds: 5
-    lease-expiration-duration-in-seconds: 15
-  client:
-    service-url:
-      defaultZone: http://192.168.22.146:7001/eureka
-```
+    ```yml
+    spring:
+      datasource:
+        druid:
+          admin:
+            login-username: user
+            login-password: 123456
+            applications:
+            - escloud-service-elk
+            - escloud-service-manager
+            - escloud-service-ocr
+            - escloud-service-user
+    
+    eureka:
+      instance:
+        prefer-ip-address: true
+        lease-renewal-interval-in-seconds: 5
+        lease-expiration-duration-in-seconds: 15
+      client:
+        service-url:
+          defaultZone: http://192.168.22.146:7001/eureka
+    ```
+
+    - nacos 注册中心
+    
+    ```yml
+    spring:
+      cloud:
+        nacos:
+          server-addr: 192.168.22.100:8848  # 单机 nacos 地址，或 nacos 集群虚拟 IP
+      datasource:
+        druid:
+          admin:
+            login-username: user
+            login-password: 123456
+            applications:
+            - escloud-service-elk
+            - escloud-service-manager
+            - escloud-service-ocr
+            - escloud-service-user
+    ```
 
 4. 客户端微服务配置
 
