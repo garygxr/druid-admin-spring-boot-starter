@@ -3,6 +3,7 @@
 - [功能](#功能)
 - [效果展示](#效果展示)
 - [配置](#配置)
+- [项目实例](#项目实例)
 
 # 功能
 
@@ -64,6 +65,26 @@
 </dependency>
 ```
 
+- eureka 注册中心引入
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    <version>${spring-cloud.version}</version>
+</dependency>
+```
+
+- nacos 注册中心引入
+
+```xml
+<dependency>
+    <groupId>com.alibaba.cloud</groupId>
+    <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+    <version>${spring-cloud-alibaba.version}</version>
+</dependency>
+```
+
 3. yaml 中配置
 
 - eureka 注册中心
@@ -75,7 +96,7 @@ spring:
       admin:
         login-username: user
         login-password: 123456
-        applications:
+        applications:                # 需要监控的微服务名，默认为 spring.application.name
         - escloud-service-elk
         - escloud-service-manager
         - escloud-service-ocr
@@ -103,7 +124,7 @@ spring:
       admin:
         login-username: user
         login-password: 123456
-        applications:
+        applications:                # 需要监控的微服务名，默认为 spring.application.name
         - escloud-service-elk
         - escloud-service-manager
         - escloud-service-ocr
@@ -113,6 +134,21 @@ spring:
 4. 客户端微服务配置
 
 ```yml
+spring:
+  datasource:
+    druid:
+      filter:
+        stat:
+          enabled: true
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+      stat-view-servlet:
+        enabled: true
+        allow: ''                # ''表示允许所有地址访问，默认只能本服务访问
+        url-pattern: /druid/*
+
 management:
   endpoints:
     enabled-by-default: true
