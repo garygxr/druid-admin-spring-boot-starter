@@ -148,16 +148,6 @@ spring:
         enabled: true
         allow: ''                # ''表示允许所有地址访问，默认只能本服务访问
         url-pattern: /druid/*
-
-management:
-  endpoints:
-    enabled-by-default: true
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: always
 ```
 
 5. 访问 uri `/druid/service.html`
