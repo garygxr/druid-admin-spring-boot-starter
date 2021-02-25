@@ -161,3 +161,7 @@ management:
 ```
 
 5. 访问 uri `/druid/service.html`
+
+# 项目实例
+
+[druid-admin-samples](https://gitee.com/jarvis-lib/druid-admin-samples)
