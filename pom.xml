@@ -2,9 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.stark</groupId>
+    <groupId>com.github.benfromchina</groupId>
 	<artifactId>druid-admin-spring-boot-starter</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
+	
+	<name>druid-admin-spring-boot-starter</name>
+	<description>Provides cluster-based monitoring functionalities.</description>
+	<url>https://github.com/benfromchina/druid-admin-spring-boot-starter</url>
 
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,11 +20,13 @@
         <fastjson.version>1.2.73</fastjson.version>
         <httpcomponents.version>4.4.13</httpcomponents.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
 		<spring-boot.version>2.2.6.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
     </properties>
-
+    
     <dependencies>
     	 <dependency>
             <groupId>org.projectlombok</groupId>
@@ -76,6 +82,29 @@
 		</dependency>
     </dependencies>
     
+    <developers>
+		<developer>
+			<id>mengbin</id>
+			<name>mengbin</name>
+			<email>mengbin@hotmail.com</email>
+			<url>https://github.com/benfromchina</url>
+		</developer>
+	</developers>
+	
+	<scm>
+		<url>https://github.com/benfromchina/druid-admin-spring-boot-starter.git</url>
+		<connection>scm:git:https://github.com/benfromchina/druid-admin-spring-boot-starter.git</connection>
+	</scm>
+	
+	<licenses>
+		<license>
+			<name>Apache-2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+	</licenses>
+	
     <dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -96,16 +125,14 @@
 	</dependencyManagement>
 	
 	<distributionManagement>
-		<repository>
-			<id>nexus</id>
-			<name>Releases</name>
-			<url>http://218.58.62.115:18081/nexus/repository/releases/</url>
-		</repository>
 		<snapshotRepository>
-			<id>nexus</id>
-			<name>Snapshots</name>
-			<url>http://218.58.62.115:18081/nexus/repository/snapshots/</url>
+			<id>sonatype</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
+		<repository>
+			<id>sonatype</id>
+			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
 	</distributionManagement>
 
     <build>
@@ -129,6 +156,40 @@
 						<phase>package</phase>
 						<goals>
 							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
+				<configuration>
+					<doclint>none</doclint>
+					<charset>UTF-8</charset>
+					<detectLinks>true</detectLinks>
+					<docencoding>UTF-8</docencoding>
+					<encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>${maven-gpg-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
 						</goals>
 					</execution>
 				</executions>

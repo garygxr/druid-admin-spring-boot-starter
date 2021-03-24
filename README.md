@@ -33,29 +33,13 @@
 
 # 配置
 
-1. pom.xml 中添加仓库
-
-
-```xml
-<repositories>
-    <repository>
-        <id>eastsoft-snapshots</id>
-        <name>Eastsoft Snapshots</name>
-        <url>http://218.58.62.115:18081/nexus/repository/snapshots/</url>
-        <snapshots>
-            <enabled>true</enabled>
-        </snapshots>
-    </repository>
-</repositories>
-```
-
-2. pom.xml 中引入依赖
+1. . pom.xml 中引入依赖
 
 ```xml
 <dependency>
-    <groupId>com.stark</groupId>
+    <groupId>com.github.benfromchina</groupId>
     <artifactId>druid-admin-spring-boot-starter</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 </dependency>
 <!-- druid 监控底层基于 servlet ，需要 web 模块支持 -->
 <dependency>
@@ -85,7 +69,7 @@
 </dependency>
 ```
 
-3. yaml 中配置
+2. yaml 中配置
 
 - eureka 注册中心
 
@@ -131,7 +115,7 @@ spring:
         - escloud-service-user
 ```
 
-4. 客户端微服务配置
+3. 客户端微服务配置
 
 ```yml
 spring:
@@ -150,7 +134,7 @@ spring:
         url-pattern: /druid/*
 ```
 
-5. 访问 uri `/druid/service.html`
+4. 访问 uri `/druid/service.html`
 
 # 项目实例
 
