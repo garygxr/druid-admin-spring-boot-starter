@@ -14,10 +14,9 @@ import com.alibaba.druid.stat.DruidStatService;
 import com.alibaba.druid.stat.DruidStatServiceMBean;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.stark.commons.lang.util.HttpUtil;
-import com.stark.commons.lang.util.Utils;
 import com.stark.druid.admin.boot.properties.DruidAdminProperties;
 import com.stark.druid.admin.domain.Service;
+import com.stark.druid.admin.util.HttpUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -58,7 +57,7 @@ public class DruidAdminService implements DruidStatServiceMBean {
         String serviceInstanceId = parameters.get("instanceId");
         parameters.remove("serviceId");
         parameters.remove("instanceId");
-        url = StringUtils.substringBefore(url, "?") + "?" + Utils.getQueryString(parameters);
+        url = StringUtils.substringBefore(url, "?") + "?" + HttpUtil.getQueryString(parameters);
         return delegate(serviceId, serviceInstanceId, url);
     }
     

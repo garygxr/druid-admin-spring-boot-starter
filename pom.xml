@@ -11,10 +11,12 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <!-- jars -->
-        <commons-lang.version>1.1.0-SNAPSHOT</commons-lang.version>
+        <commons-collections4.version>4.2</commons-collections4.version>
         <druid.version>1.2.1</druid.version>
         <fastjson.version>1.2.73</fastjson.version>
+        <httpcomponents.version>4.4.13</httpcomponents.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
 		<spring-boot.version>2.2.6.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
     </properties>
@@ -25,9 +27,8 @@
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
 		</dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -39,10 +40,18 @@
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
 		</dependency>
-        <dependency>
-			<groupId>com.stark.commons</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>${commons-lang.version}</version>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>${commons-collections4.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
 		</dependency>
 		
 		<dependency>
@@ -58,6 +67,11 @@
 		<dependency>
 		   <groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-commons</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
     </dependencies>
@@ -108,6 +122,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven-source-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
