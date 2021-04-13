@@ -1,3 +1,7 @@
+[![](https://img.shields.io/badge/maven%20central-v1.0.0-brightgreen)](https://mvnrepository.com/artifact/com.github.benfromchina/druid-admin-spring-boot-starter)
+[![](https://img.shields.io/badge/release-v1.0.0-blue)](https://gitee.com/jarvis-lib/druid-admin-spring-boot-starter/releases/v1.0.0)
+[![](https://img.shields.io/badge/license-Apache--2.0-9cf)](https://www.apache.org/licenses/LICENSE-2.0.html)
+
 # 目录
 
 - [功能](#功能)
